@@ -364,7 +364,7 @@ async function shareOnSns() {
         wrapText(ctx, aiMessage, padding, startY, maxWidth, lineHeight);
 
         canvas.toBlob(async (blob) => {
-            const file = new File([blob], 'workout-result.png', { type: '/image/png' });
+            const file = new File([blob], 'workout-result.png', { type: 'image/png' });
             const shareData = {
                 files: [file],
                 title: getTranslation('share_title'),
