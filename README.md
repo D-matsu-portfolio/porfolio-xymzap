@@ -30,5 +30,4 @@
 ### 開発者について
 
 -   [GitHubプロフィールへ](https://github.com/D-matsu-portfolio)
--   **スキル**: C++, Java, JavaScript
--   **学習中の技術**: Ruby on Rails, Laravel
+-   **学習中の技術**:C++, Java, JavaScript , php, Ruby on Rails, Laravel
