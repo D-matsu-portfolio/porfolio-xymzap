@@ -262,7 +262,7 @@ async function getAndDisplayTokenBalance(address) {
             const backgroundIndex = Math.min(currentLevelIndex, 9);
             bodyElement.className = `background-${backgroundIndex}`;
 
-            document.getElementById('currentLevelBadge').src = `level${currentLevelIndex}_badge.svg`;
+            document.getElementById('currentLevelBadge').src = `images/level${currentLevelIndex}_badge.svg`;
             
         } else {
             tokenBalanceElement.textContent = getTranslation('no_tokens');
@@ -301,7 +301,7 @@ async function shareOnSns() {
     }
 
     const backgroundIndex = Math.min(currentLevelIndex, 9);
-    const backgroundImageSrc = `${backgroundIndex}.png`;
+    const backgroundImageSrc = `images/${backgroundIndex}.png`;
 
     const loadImage = src => new Promise((resolve, reject) => {
         const img = new Image();
