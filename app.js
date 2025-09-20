@@ -269,7 +269,7 @@ async function getAndDisplayTokenBalance(address) {
             bodyElement.classList.add('background-0');
             document.getElementById('levelDisplay').textContent = getTranslation('level_display_text', {levelName: getTranslation('level_beginner'), progress: 0});
             document.querySelector('.progress-bar').style.width = `0%`;
-            document.getElementById('currentLevelBadge').src = `level0_badge.svg`;
+            document.getElementById('currentLevelBadge').src = `images/level0_badge.svg`;
         }
     } catch (error) {
         console.error(error);
