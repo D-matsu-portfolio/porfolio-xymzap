@@ -262,14 +262,14 @@ async function getAndDisplayTokenBalance(address) {
             const backgroundIndex = Math.min(currentLevelIndex, 9);
             bodyElement.className = `background-${backgroundIndex}`;
 
-            document.getElementById('currentLevelBadge').src = `images/level${currentLevelIndex}_badge.svg`;
+            document.getElementById('currentLevelBadge').src = `/images/level${currentLevelIndex}_badge.svg`;
             
         } else {
             tokenBalanceElement.textContent = getTranslation('no_tokens');
             bodyElement.classList.add('background-0');
             document.getElementById('levelDisplay').textContent = getTranslation('level_display_text', {levelName: getTranslation('level_beginner'), progress: 0});
             document.querySelector('.progress-bar').style.width = `0%`;
-            document.getElementById('currentLevelBadge').src = `images/level0_badge.svg`;
+            document.getElementById('currentLevelBadge').src = `/images/level0_badge.svg`;
         }
     } catch (error) {
         console.error(error);
@@ -301,7 +301,7 @@ async function shareOnSns() {
     }
 
     const backgroundIndex = Math.min(currentLevelIndex, 9);
-    const backgroundImageSrc = `images/${backgroundIndex}.png`;
+    const backgroundImageSrc = `/images/${backgroundIndex}.png`;
 
     const loadImage = src => new Promise((resolve, reject) => {
         const img = new Image();
@@ -364,7 +364,7 @@ async function shareOnSns() {
         wrapText(ctx, aiMessage, padding, startY, maxWidth, lineHeight);
 
         canvas.toBlob(async (blob) => {
-            const file = new File([blob], 'workout-result.png', { type: 'image/png' });
+            const file = new File([blob], 'workout-result.png', { type: '/image/png' });
             const shareData = {
                 files: [file],
                 title: getTranslation('share_title'),
@@ -389,7 +389,7 @@ async function shareOnSns() {
                 link.download = 'workout-result.png';
                 link.click();
             }
-        }, 'image/png');
+        }, '/image/png');
 
     } catch (error) {
         console.error('Error creating share image:', error);
