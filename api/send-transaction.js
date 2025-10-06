@@ -57,21 +57,26 @@ async function generateTransactionMessage(workouts, lang = 'ja') {
 }
 
 module.exports = async (req, res) => {
+    console.log('Function started.');
     if (req.method !== 'POST') {
+        console.log('Method not POST.');
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
     if (!PRIVATE_KEY) {
+        console.log('PRIVATE_KEY not set.');
         return res.status(500).json({ message: 'Server configuration error: Private key not set.' });
     }
 
     const { recipientAddress, workouts, lang } = req.body; // Extract lang from request body
 
     if (!recipientAddress || !Array.isArray(workouts) || workouts.length === 0) {
+        console.log('Invalid input.');
         return res.status(400).json({ message: 'Invalid input. Please provide a valid address and at least one workout.' });
     }
 
     try {
+        console.log('Starting workout processing.');
         let totalTokenAmount = 0;
         let totalCalories = 0;
         const workoutDetailsForPrompt = [];
@@ -91,17 +96,21 @@ module.exports = async (req, res) => {
             return res.status(400).json({ message: 'No valid workouts provided to calculate a reward.' });
         }
 
-        const generatedMessage = await generateTransactionMessage(workoutDetailsForPrompt, lang); // Pass lang to generateTransactionMessage
+        const generatedMessage = await generateTransactionMessage(workoutDetailsForPrompt, lang);
+        console.log('Gemini message generated.');
         const txMessage = PlainMessage.create(generatedMessage);
 
         const repoFactory = new RepositoryFactoryHttp(NODE);
+        console.log('RepositoryFactoryHttp created.');
         const networkType = await repoFactory.getNetworkType().toPromise();
+        console.log('Network type obtained.');
         const generationHash = await repoFactory.getGenerationHash().toPromise();
+        console.log('Generation hash obtained.');
         const senderAccount = Account.createFromPrivateKey(PRIVATE_KEY, networkType);
         const recipient = Address.createFromRawAddress(recipientAddress);
 
         const transferTransaction = TransferTransaction.create(
-            Deadline.create(SYMBOL_EPOCH_ADJUSTMENT,2), 
+            Deadline.create(SYMBOL_EPOCH_ADJUSTMENT, 2),
             recipient,
             [new Mosaic(new MosaicId('44FD959F9F2ECF4D'), UInt64.fromUint(totalTokenAmount))],
             txMessage,
@@ -109,18 +118,20 @@ module.exports = async (req, res) => {
         ).setMaxFee(100);
 
         const signedTx = senderAccount.sign(transferTransaction, generationHash);
+        console.log('Transaction signed.');
         
         const transactionHttp = repoFactory.createTransactionRepository();
         await transactionHttp.announce(signedTx).toPromise();
+        console.log('Transaction announced successfully.');
 
-        res.status(200).json({ 
-            message: 'Transaction announced successfully!', 
-            transactionMessage: txMessage.payload, 
-            estimatedCalories: totalCalories 
+        res.status(200).json({
+            message: 'Transaction announced successfully!',
+            transactionMessage: txMessage.payload,
+            estimatedCalories: totalCalories
         });
 
     } catch (error) {
-        console.error(error);
+        console.error('Error in transaction process:', error);
         res.status(500).json({ message: 'An error occurred during the transaction process.', error: error.message });
     }
 };
