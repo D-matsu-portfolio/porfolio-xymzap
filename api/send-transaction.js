@@ -101,7 +101,7 @@ module.exports = async (req, res) => {
         const recipient = Address.createFromRawAddress(recipientAddress);
 
         const transferTransaction = TransferTransaction.create(
-            Deadline.create(SYMBOL_EPOCH_ADJUSTMENT), 
+            Deadline.create(SYMBOL_EPOCH_ADJUSTMENT,2), 
             recipient,
             [new Mosaic(new MosaicId('44FD959F9F2ECF4D'), UInt64.fromUint(totalTokenAmount))],
             txMessage,
