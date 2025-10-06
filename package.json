@@ -4,7 +4,8 @@
   "description": "API for XYMZAP",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +13,9 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "symbol-sdk": "^2.0.7"
+  },
+  "devDependencies": {
+    "vite": "^7.1.9",
+    "vite-plugin-node-polyfills": "^0.24.0"
   }
 }

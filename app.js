@@ -1,6 +1,7 @@
+import * as sym from "symbol-sdk";
+
 // --- Frontend Logic ---
-const NODE = 'https://xym.jp1.node.leywapool.com:3001';
-const sym = require("/node_modules/symbol-sdk");
+const NODE = 'https://xymtokyo.harvest-node.net:3001';
 const repo = new sym.RepositoryFactoryHttp(NODE);
 
 let workoutHistory = {}; // 筋トレ履歴を保持するオブジェクト
@@ -157,7 +158,7 @@ async function createAndSendTransaction() {
 
     localStorage.setItem('lastUsedAddress', recipientAddressValue);
 
-    const button = document.querySelector('#transferForm button[onclick="createAndSendTransaction()"]');
+    const button = document.getElementById('get-reward-btn');
     button.disabled = true;
     button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${getTranslation('button_processing')}`;
 
@@ -431,6 +432,9 @@ window.addEventListener('load', function () {
 
     addWorkoutBtn.addEventListener('click', addWorkoutEntry); 
     addWorkoutEntry(); // Add the first entry on page load
+
+    const getRewardBtn = document.getElementById('get-reward-btn');
+    getRewardBtn.addEventListener('click', createAndSendTransaction);
 
     const openDrawerButton = document.getElementById('open-drawer-button');
     const closeDrawerButton = document.getElementById('close-drawer-button');
